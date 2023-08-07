@@ -81,8 +81,8 @@ const handleSignUp = () => {
 };
 
 return (
-  <Container maxWidth="xs">
-    <Paper elevation={3} sx={{ padding: 2 }} className="login-container">
+  <Container maxWidth="xs" className="login-container">
+    <Paper elevation={3} sx={{ padding: 2 }} className="custom-paper">
       <Typography variant="h5" align="center">
         Login
       </Typography>
