@@ -5,14 +5,21 @@ import { getUserData } from "../../services/getUserData";
 import { IdFuncionarioContext } from "../../context/IdFuncionarioContext";
 import { GetAllSkills } from "../../services/GetAllSkills";
 import "./Home.css";
+import { useNavigate } from "react-router-dom";
+
 
 const Home = () => {
+  const navigate = useNavigate();
+
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [skillsFuncionario, setSkillsFuncionario] = useState([]);
   const [allSkills, setAllSkills] = useState([]);
   const [skillsToAdd, setSkillsToAdd] = useState([]);
   const [funcionarioDados, setFuncionarioDados] = useState(null);
   const { userId } = useContext(IdFuncionarioContext);
+  const [SelectedSkillLevel, setSelectedSkillLevel] = useState();
+
 
   const fetchAllSkills = async () => {
     try {
@@ -49,9 +56,12 @@ const Home = () => {
 
   const getSkillsNotInFuncionario = () => {
     return allSkills.filter(
-      (skill) =>
-        !skillsFuncionario.some((funcSkill) => funcSkill.id === skill.id)
+      (skill) => !skillsFuncionario.some((funcSkill) => funcSkill.id === skill.id)
     );
+  };
+
+  const getSkillsInFuncionario = () => {
+    return skillsFuncionario;
   };
 
   const openModal = () => {
@@ -67,9 +77,9 @@ const Home = () => {
     const dataPost = {
       funcionarioId: userId,
       skillIds: [skillId], // Sending only one skill id at a time
-      level: 3,
+      level: SelectedSkillLevel,
     };
-
+    console.log("LEVEL ", SelectedSkillLevel)
     try {
       await fetch(
         `http://localhost:8080/api/funcionarios/${userId}/skills/associar-skills`,
@@ -82,16 +92,50 @@ const Home = () => {
         }
       );
       console.log("Skill adicionada com sucesso!");
-      setSkillsFuncionario((prevSkills) => [...prevSkills, skillId]);
+  
+      setSkillsFuncionario((prevSkills) => [...prevSkills, { id: skillId, level: SelectedSkillLevel }]);
+  
+      setAllSkills((prevSkills) => prevSkills.filter((skill) => skill.id !== skillId));
     } catch (error) {
       console.error("Erro ao adicionar a skill:", error);
     }
   };
 
+  const removeSkillFromFuncionario = async (skillId) => {
+    const dataDelete = {
+      skillId: skillId,
+    };
+
+    try {
+      await fetch(
+        `http://localhost:8080/api/funcionarios/${userId}/skills/excluir`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dataDelete),
+        }
+      );
+      console.log("Skill removida com sucesso!");
+      // After successful deletion, update the skillsFuncionario state to remove the skill
+      setSkillsFuncionario((prevSkills) =>
+        prevSkills.filter((skill) => skill.id !== skillId)
+      );
+    } catch (error) {
+      console.error("Erro ao remover a skill:", error);
+    }
+  };
+
+  const handleLogout = () => {
+    navigate('/login');
+  };
+
+
   return (
     <div>
       <h1>Home</h1>
-      <button onClick={openModal}>Adicionar Skill</button>
+      <button onClick={handleLogout}>Logout</button>
       <input
         value={funcionarioDados?.name}
         type="text"
@@ -99,7 +143,7 @@ const Home = () => {
         className="textboxLeftVC"
       />
 
-      {skillsFuncionario.map((skill) => (
+      {getSkillsInFuncionario().map((skill) => (
         <div key={skill.id}>
           <img
             src={skill.urlImagem}
@@ -109,6 +153,12 @@ const Home = () => {
           <p>Name: {skill.name}</p>
           <p>Level: {skill.level}</p>
           <p>Description: {skill.description}</p>
+          <button onClick={() => removeSkillFromFuncionario(skill.id)}>
+            <span role="img" aria-label="Remove Skill">
+              🗑️
+            </span>
+          </button>
+
         </div>
       ))}
 
@@ -124,6 +174,10 @@ const Home = () => {
             <p>Name: {skill.name}</p>
             <p>Level: {skill.level}</p>
             <p>Description: {skill.description}</p>
+            <input
+              type="number"
+              onChange={(e) => setSelectedSkillLevel(e.target.value)}
+            />
             <button onClick={() => handleAddSkill(skill.id)}>
               Add Skill
             </button>
