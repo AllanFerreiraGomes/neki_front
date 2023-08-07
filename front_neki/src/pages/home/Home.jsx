@@ -1,78 +1,93 @@
 import React, { useState, useEffect, useContext } from "react";
 import SkillModal from "./SkillModal";
-import SkillList from "./SkillList";
 import { getSkillsFuncionario } from "../../services/GetSkillsFuncionario";
 import { getUserData } from "../../services/getUserData";
 import { IdFuncionarioContext } from "../../context/IdFuncionarioContext";
 import { GetAllSkills } from "../../services/GetAllSkills";
-import "./Home.css"
+import "./Home.css";
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [skills, setSkills] = useState([]);
+  const [skillsFuncionario, setSkillsFuncionario] = useState([]);
+  const [allSkills, setAllSkills] = useState([]);
+  const [skillsToAdd, setSkillsToAdd] = useState([]);
+  const [funcionarioDados, setFuncionarioDados] = useState(null);
   const { userId } = useContext(IdFuncionarioContext);
 
-  // Função para abrir a modal
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-  // Função para fechar a modal
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-  // Função para adicionar uma nova Skill à lista
-  const handleAddSkill = (newSkill) => {
-    const newSkillWithId = { ...newSkill, id: skills.length + 1 };
-    setSkills([...skills, newSkillWithId]);
-    saveSkills([...skills, newSkillWithId]); // Salva as skills no localStorage
-  };
-
-  const [funcionarioDados, setFuncionarioDados] = useState([]);
-  const [skillsFuncionario, setSkillsFuncionario] = useState([]);
-  const [allSkills, SetAllSkills] = useState([]);
-
-  const fethAllSkills = async () => {
+  const fetchAllSkills = async () => {
     try {
-      console.log("Comecei a fazer a requisição by id");
       const allSkillsData = await GetAllSkills();
-      SetAllSkills(allSkillsData);
+      setAllSkills(allSkillsData);
     } catch (error) {
-      console.error("Erro ao buscar todas as skills:", error);
+      console.error("Error fetching all skills:", error);
     }
   };
 
   const fetchSkillsFuncionario = async () => {
     try {
       const dataSkillsFuncionario = await getSkillsFuncionario(userId);
-      console.log("dataSkillsFuncionario !!!", dataSkillsFuncionario);
       setSkillsFuncionario(dataSkillsFuncionario);
     } catch (error) {
-      console.log("Entrei no catch fetchSkillsFuncionario ", error);
+      console.log("Error fetching skills for Funcionário", error);
     }
   };
-  //ve se o cara ja tem as skills 
-  const getSkillsNotInFuncionario = () => {
-    return allSkills.filter((skill) =>
-      skillsFuncionario.every((funcSkill) => funcSkill.id !== skill.id)
-    );
-  };
-
 
   const fetchUserData = async () => {
     try {
-      console.log("Comecei a fazer a requisição by id");
       const data = await getUserData(userId);
       setFuncionarioDados(data);
     } catch (error) {
-      console.error("Erro ao buscar os dados do Funcionário:", error);
+      console.error("Error fetching Funcionário data:", error);
     }
   };
 
   useEffect(() => {
     fetchSkillsFuncionario();
     fetchUserData();
+    fetchAllSkills();
   }, [userId]);
+
+  const getSkillsNotInFuncionario = () => {
+    return allSkills.filter(
+      (skill) =>
+        !skillsFuncionario.some((funcSkill) => funcSkill.id === skill.id)
+    );
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSkillsToAdd([]);
+  };
+
+  const handleAddSkill = async (skillId) => {
+    const dataPost = {
+      funcionarioId: userId,
+      skillIds: [skillId], // Sending only one skill id at a time
+      level: 3,
+    };
+
+    try {
+      await fetch(
+        `http://localhost:8080/api/funcionarios/${userId}/skills/associar-skills`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dataPost),
+        }
+      );
+      console.log("Skill adicionada com sucesso!");
+      setSkillsFuncionario((prevSkills) => [...prevSkills, skillId]);
+    } catch (error) {
+      console.error("Erro ao adicionar a skill:", error);
+    }
+  };
+
   return (
     <div>
       <h1>Home</h1>
@@ -84,40 +99,42 @@ const Home = () => {
         className="textboxLeftVC"
       />
 
-      {/* Map through the skillsFuncionario array and render its elements */}
-      <table>
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Level</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          {skillsFuncionario.map((skill) => (
-            <tr key={skill.id}>
-              <td>
-                <img
-                  src={skill.urlImagem}
-                  alt={skill.name}
-                  style={{ width: "100px", height: "auto" }}
-                />
-              </td>
-              <td>{skill.name}</td>
-              <td>{skill.level}</td>
-              <td>{skill.description}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {skillsFuncionario.map((skill) => (
+        <div key={skill.id}>
+          <img
+            src={skill.urlImagem}
+            alt={skill.name}
+            style={{ width: "25%", height: "auto" }}
+          />
+          <p>Name: {skill.name}</p>
+          <p>Level: {skill.level}</p>
+          <p>Description: {skill.description}</p>
+        </div>
+      ))}
 
-      <SkillList skills={skills} />
+      <div>
+        <h2>Skills the Funcionário doesn't have:</h2>
+        {getSkillsNotInFuncionario().map((skill) => (
+          <div key={skill.id}>
+            <img
+              src={skill.urlImagem}
+              alt={skill.name}
+              style={{ width: "25%", height: "auto" }}
+            />
+            <p>Name: {skill.name}</p>
+            <p>Level: {skill.level}</p>
+            <p>Description: {skill.description}</p>
+            <button onClick={() => handleAddSkill(skill.id)}>
+              Add Skill
+            </button>
+          </div>
+        ))}
+      </div>
 
       <SkillModal
         open={isModalOpen}
         onClose={closeModal}
-        onAddSkill={handleAddSkill}
+        onAddSkill={handleAddSkill} // Pass the reference to the function without calling it
       />
     </div>
   );
