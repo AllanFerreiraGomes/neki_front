@@ -6,6 +6,7 @@ import { IdFuncionarioContext } from "../../context/IdFuncionarioContext";
 import { GetAllSkills } from "../../services/GetAllSkills";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
+import { FiLogOut } from 'react-icons/fi';
 
 
 const Home = () => {
@@ -92,9 +93,9 @@ const Home = () => {
         }
       );
       console.log("Skill adicionada com sucesso!");
-  
+
       setSkillsFuncionario((prevSkills) => [...prevSkills, { id: skillId, level: SelectedSkillLevel }]);
-  
+
       setAllSkills((prevSkills) => prevSkills.filter((skill) => skill.id !== skillId));
     } catch (error) {
       console.error("Erro ao adicionar a skill:", error);
@@ -135,61 +136,69 @@ const Home = () => {
   return (
     <div>
       <h1>Home</h1>
-      <button onClick={handleLogout}>Logout</button>
+      <button className="logout-button" onClick={handleLogout}>    
+          <FiLogOut />
+           Logout      
+      </button>
       <input
         value={funcionarioDados?.name}
         type="text"
         name="name"
         className="textboxLeftVC"
       />
-
-      {getSkillsInFuncionario().map((skill) => (
-        <div key={skill.id}>
-          <img
-            src={skill.urlImagem}
-            alt={skill.name}
-            style={{ width: "25%", height: "auto" }}
-          />
-          <p>Name: {skill.name}</p>
-          <p>Level: {skill.level}</p>
-          <p>Description: {skill.description}</p>
-          <button onClick={() => removeSkillFromFuncionario(skill.id)}>
-            <span role="img" aria-label="Remove Skill">
-              🗑️
-            </span>
-          </button>
-
-        </div>
-      ))}
+ <h2>Habilidades:</h2>
+{skillsFuncionario.map((skill) => (
+  <div key={skill.id} className="skill-item">
+    <img
+      src={skill.urlImagem}
+      alt={skill.name}
+      className="skill-image"
+    />
+    <div className="skill-details">
+      <p>Name: {skill.name}</p>
+      <p>Level: {skill.level}</p>
+      <p>Description: {skill.description}</p>
+    </div>
+    <button
+      className="remove-skill-button"
+      onClick={() => removeSkillFromFuncionario(skill.id)}
+    >
+      <span role="img" aria-label="Remove Skill">
+        🗑️
+      </span>
+      Remove
+    </button>
+  </div>
+))}
 
       <div>
-        <h2>Skills the Funcionário doesn't have:</h2>
+      <h2>Habilidades Que Não Possui:</h2>
         {getSkillsNotInFuncionario().map((skill) => (
           <div key={skill.id}>
             <img
               src={skill.urlImagem}
               alt={skill.name}
-              style={{ width: "25%", height: "auto" }}
+              // style={{ width: "25%", height: "auto" }}
+              className="skill-image"
             />
+
             <p>Name: {skill.name}</p>
             <p>Level: {skill.level}</p>
             <p>Description: {skill.description}</p>
             <input
+              className="level-input"
               type="number"
               onChange={(e) => setSelectedSkillLevel(e.target.value)}
             />
-            <button onClick={() => handleAddSkill(skill.id)}>
+            <button
+              className="add-skill-button"
+              onClick={() => handleAddSkill(skill.id)}>
               Add Skill
             </button>
           </div>
         ))}
       </div>
 
-      <SkillModal
-        open={isModalOpen}
-        onClose={closeModal}
-        onAddSkill={handleAddSkill} // Pass the reference to the function without calling it
-      />
     </div>
   );
 };

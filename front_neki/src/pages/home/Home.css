@@ -1,0 +1,201 @@
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  align-items: center; /* Centraliza verticalmente os elementos */
+}
+
+li img {
+  width: 150px; /* Defina o tamanho desejado para a largura da imagem */
+  height: auto; /* Mantenha a altura automática para preservar a proporção da imagem */
+  margin-right: 20px; /* Adiciona um espaço entre a imagem e os dados */
+}
+
+/* Modal styles */
+.modal {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.modal h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.modal form div {
+  margin-bottom: 10px;
+}
+
+.modal label {
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.modal input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.modal button {
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modal button:last-child {
+  margin-right: 0;
+}
+
+/* "Adicionar Skill" button */
+button.add-skill-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+button.add-skill-button:hover {
+  background-color: #0056b3;
+}
+
+/* Home page styles */
+.home-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.home-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.home-header h1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.textboxLeftVC {
+  margin-left: 6%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  height: 35px;
+  width: 550px;
+  border-radius: 10px;
+  justify-content: center;
+}
+
+/* ... (additional styles if needed) */
+
+/* Skill item styles */
+.skill-item {
+  display: flex; /* Alinha os elementos em linha */
+  align-items: center; /* Centraliza verticalmente os elementos */
+  margin-bottom: 20px; /* Adiciona espaço entre os itens */
+}
+
+.skill-image {
+  width: 150px; /* Define o tamanho desejado para a largura da imagem */
+  height: auto; /* Mantém a altura automática para preservar a proporção da imagem */
+  margin-right: 20px; /* Adiciona espaço entre a imagem e os dados */
+}
+
+.remove-skill-button {
+  background-color: #dc3545; /* Muda a cor do botão de remover */
+  color: #fff; /* Muda a cor do texto do botão de remover */
+}
+
+button.remove-skill-button {
+  margin-left: auto; /* Move o botão para a direita da tela */
+  align-self: flex-end; /* Alinhar o botão à direita */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #dc3545; /* Cor vermelha de fundo */
+  color: #fff; /* Cor branca para o texto */
+  cursor: pointer;
+}
+
+button.remove-skill-button:hover {
+  background-color: #c82333; /* Cor vermelha escura ao passar o mouse */
+}
+
+button.remove-skill-button span {
+  margin-right: 5px; /* Espaçamento entre o ícone e o texto do botão */
+}
+
+/* "Adicionar Skill" button */
+button.add-skill-button {
+  
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+button.add-skill-button:hover {
+  background-color: #0056b3;
+}
+
+
+/* Level input */
+input.level-input {
+  width: 50px; /* Define a largura do input */
+  padding: 8px; /* Adiciona espaçamento interno para melhor visualização */
+  border: 1px solid #ccc; /* Adiciona uma borda */
+  border-radius: 5px; /* Adiciona bordas arredondadas */
+}
+
+/* Logout button */
+button.logout-button {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #dc3545; /* Cor vermelha de fundo */
+  color: #fff; /* Cor branca para o texto */
+  cursor: pointer;
+}
+
+button.logout-button:hover {
+  background-color: #c82333; /* Cor vermelha escura ao passar o mouse */
+}
+
+button.logout-button svg {
+  margin-right: 5px; /* Espaçamento entre o ícone e o texto do botão */
+}
+
