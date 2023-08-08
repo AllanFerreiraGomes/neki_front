@@ -1,4 +1,10 @@
-/* login.css */
+body {
+  margin: 0  !important;
+  display: contents  !important;
+  place-items: center  !important;
+  min-width: 320px  !important;
+  min-height: 100vh  !important;
+}
 
 .login-wrapper {
   display: flex;
@@ -9,19 +15,16 @@
 }
 
 .login-container {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  background-color: #333;
-  color: #fff;
+  margin-top: 100px;
+  place-items: center !important;
+  min-width: 320px !important;
+  min-height: 100vh !important;
 }
 
 .login-container h5 {
   margin-bottom: 20px;
   font-size: 24px;
-  color: #fff;
+  color: #007bff;
   text-align: center;
 }
 
@@ -70,10 +73,32 @@
   text-decoration: underline;
 }
 
+/* Estilos para o Paper com a classe custom-paper */
 .custom-paper {
-  background-color: #444; /* Fundo branco */
-  color: #0a0404; /* Cor do texto */
+  background-color: #333; /* Fundo branco */
+  color: #333; /* Cor do texto */
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   padding: 20px;
+}
+
+/* Estilos para os inputs */
+.login-container .MuiTextField-root {
+  margin-bottom: 10px;
+}
+
+.login-container .MuiOutlinedInput-root {
+  background-color: #27060691; /* Fundo do input mais escuro */
+}
+
+.login-container .MuiOutlinedInput-input {
+  color: #3f3232; /* Cor do texto do input */
+}
+
+.login-container .MuiOutlinedInput-notchedOutline {
+  border-color: #007bff; /* Cor da borda do input */
+}
+
+.custom-login-input .MuiOutlinedInput-root {
+  background-color: #ffffff ; /* Defina a cor de fundo desejada */
 }

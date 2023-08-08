@@ -24,6 +24,7 @@ const Home = () => {
 
   const fetchAllSkills = async () => {
     try {
+      console.log("fetchAllSkills !!!!!!!")
       const allSkillsData = await GetAllSkills();
       setAllSkills(allSkillsData);
     } catch (error) {
@@ -33,6 +34,7 @@ const Home = () => {
 
   const fetchSkillsFuncionario = async () => {
     try {
+      console.log("Entrei  fetchSkillsFuncionario()")
       const dataSkillsFuncionario = await getSkillsFuncionario(userId);
       setSkillsFuncionario(dataSkillsFuncionario);
     } catch (error) {
@@ -77,10 +79,10 @@ const Home = () => {
   const handleAddSkill = async (skillId) => {
     const dataPost = {
       funcionarioId: userId,
-      skillIds: [skillId], // Sending only one skill id at a time
+      skillIds: [skillId],
       level: SelectedSkillLevel,
     };
-    console.log("LEVEL ", SelectedSkillLevel)
+  
     try {
       await fetch(
         `http://localhost:8080/api/funcionarios/${userId}/skills/associar-skills`,
@@ -93,14 +95,16 @@ const Home = () => {
         }
       );
       console.log("Skill adicionada com sucesso!");
-
+  
+      fetchSkillsFuncionario();
+  
       setSkillsFuncionario((prevSkills) => [...prevSkills, { id: skillId, level: SelectedSkillLevel }]);
-
       setAllSkills((prevSkills) => prevSkills.filter((skill) => skill.id !== skillId));
     } catch (error) {
       console.error("Erro ao adicionar a skill:", error);
     }
   };
+  
 
   const removeSkillFromFuncionario = async (skillId) => {
     const dataDelete = {
@@ -119,7 +123,8 @@ const Home = () => {
         }
       );
       console.log("Skill removida com sucesso!");
-      // After successful deletion, update the skillsFuncionario state to remove the skill
+
+      fetchAllSkills();
       setSkillsFuncionario((prevSkills) =>
         prevSkills.filter((skill) => skill.id !== skillId)
       );
@@ -174,17 +179,19 @@ const Home = () => {
       <div>
       <h2>Habilidades Que Não Possui:</h2>
         {getSkillsNotInFuncionario().map((skill) => (
-          <div key={skill.id}>
-            <img
+          <div key={skill.id} className="skill-item">
+          <img
               src={skill.urlImagem}
               alt={skill.name}
               // style={{ width: "25%", height: "auto" }}
               className="skill-image"
             />
-
+            <div className="skill-details">
             <p>Name: {skill.name}</p>
             <p>Level: {skill.level}</p>
             <p>Description: {skill.description}</p>
+            </div>
+
             <input
               className="level-input"
               type="number"

@@ -1,59 +1,92 @@
-/* Estilos para a página de Cadastro */
+.register-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #242424; /* Nova cor de fundo da div envolvente */
+}
+
 .register-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 40px;
-  }
-  
-  h5 {
-    margin-bottom: 20px;
-  }
-  
-  form {
-    width: 100%;
-  }
-  
-  .text-field {
-    margin-bottom: 20px;
-  }
-  
-  .error-message {
-    color: red;
-    margin-top: 5px;
-  }
-  
-  .success-message {
-    color: green;
-    margin-top: 5px;
-  }
-  
-  .password-info {
-    margin-top: 10px;
-    font-size: 12px;
-  }
-  
-  .show-password {
-    cursor: pointer;
-  }
-  
-  .confirm-button {
-    margin-top: 20px;
-  }
-  
-  /* Estilos para o container do MUI com papel elevado */
-  .Paper-root {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Estilos para o container principal */
-  .Container-root {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
+  margin-top: 100px;
+  place-items: center !important;
+  min-width: 320px !important;
+  min-height: 100vh !important;
+}
+
+.register-container h5 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #fff;
+  text-align: center;
+}
+
+.register-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #444;
+  padding: 20px;
+  border-radius: 6px;
+}
+
+.register-container .MuiTextField-root {
+  margin-bottom: 10px;
+}
+
+.register-container .MuiButton-root {
+  margin-top: 20px;
+}
+
+.register-container .MuiFormControlLabel-root {
+  margin-bottom: 10px;
+}
+
+.register-container .MuiTypography-root.error {
+  color: #f44336;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.register-container .MuiTypography-root.error::before {
+  content: "!";
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.register-container .MuiLink-root {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: #007bff;
+  margin-top: 10px;
+}
+
+.register-container .MuiLink-root:hover {
+  text-decoration: underline;
+}
+
+/* Estilos para o Paper com a classe custom-paper */
+.custom-paper {
+  background-color: #333; /* Fundo branco */
+  color: #333; /* Cor do texto */
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+}
+
+/* Estilos para os inputs */
+.register-container .MuiTextField-root {
+  margin-bottom: 10px;
+}
+
+.register-container .MuiOutlinedInput-root {
+  background-color: #fbf9f9; /* Fundo do input mais escuro */
+}
+
+.register-container .MuiOutlinedInput-input {
+  color: #3f3232; /* Cor do texto do input */
+}
+
+.register-container .MuiOutlinedInput-notchedOutline {
+  border-color: #007bff; /* Cor da borda do input */
+}

@@ -4,6 +4,7 @@ import { TextField, Button, IconButton, InputAdornment, Container, Typography, P
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { registerUser } from '../../services/RegisterService';
 import Login  from '../login/Login';
+import './Cadastro.css'; 
 
 const Cadastro = () => {
   const navigate = useNavigate();
@@ -66,10 +67,9 @@ const Cadastro = () => {
     }
   };
 
-
   return (
-    <Container maxWidth="xs">
-      <Paper elevation={3} sx={{ padding: 2 }} className="register-container">
+    <Container maxWidth="xs" className="register-wrapper">
+      <Paper elevation={3} sx={{ padding: 2 }} className="register-container"  style={{ backgroundColor: '#333' }} >
         <Typography variant="h5" align="center">
           Cadastrar-se
         </Typography>

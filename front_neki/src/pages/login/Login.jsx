@@ -82,11 +82,11 @@ const handleSignUp = () => {
 
 return (
   <Container maxWidth="xs" className="login-container">
-    <Paper elevation={3} sx={{ padding: 2 }} className="custom-paper">
+      <Paper elevation={3} sx={{ padding: 2 }} style={{ backgroundColor: '#333' }} className="custom-paper">
       <Typography variant="h5" align="center">
         Login
       </Typography>
-      <form>
+      <form> 
         <TextField
           label="Login"
           name="username"
@@ -94,6 +94,7 @@ return (
           value={loginData.username}
           onChange={handleInputChange}
           margin="normal"
+          className="custom-login-input" 
         />
         <TextField
           label="Senha"
@@ -103,6 +104,7 @@ return (
           value={loginData.password}
           onChange={handleInputChange}
           margin="normal"
+          className="custom-login-input" 
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">

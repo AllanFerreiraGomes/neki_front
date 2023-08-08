@@ -1,4 +1,4 @@
-
+/* Skills that the employee doesn't possess */
 ul {
   list-style: none;
   padding: 0;
@@ -11,17 +11,15 @@ li {
   border: 1px solid #ccc;
   padding: 10px;
   margin-bottom: 10px;
-  align-items: center; /* Centraliza verticalmente os elementos */
+  align-items: center;
 }
 
 li img {
-  width: 150px; /* Defina o tamanho desejado para a largura da imagem */
-  height: auto; /* Mantenha a altura automática para preservar a proporção da imagem */
-  margin-right: 20px; /* Adiciona um espaço entre a imagem e os dados */
+  width: 150px;
+  height: auto;
+  margin-right: 20px;
 }
 
-
-/* "Adicionar Skill" button */
 button.add-skill-button {
   padding: 10px 20px;
   border: none;
@@ -43,7 +41,6 @@ button.add-skill-button:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  
 }
 
 .home-header {
@@ -55,8 +52,7 @@ button.add-skill-button:hover {
   font-size: 24px;
   font-weight: bold;
   color: #333;
-  text-decoration: underline; /* Sublinhado para o título */
-
+  text-decoration: underline;
 }
 
 .textboxLeftVC {
@@ -71,44 +67,42 @@ button.add-skill-button:hover {
 
 /* Skill item styles */
 .skill-item {
-  display: flex; /* Alinha os elementos em linha */
-  align-items: center; /*Centraliza verticalmente os elementos */
-  margin-bottom: 20px; /* Adiciona espaço entre os itens */
-
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .skill-image {
-  width: 150px; /* Define o tamanho desejado para a largura da imagem */
-  height: auto; /* Mantém a altura automática para preservar a proporção da imagem */
-  margin-right: 20px; /* Adiciona espaço entre a imagem e os dados */
+  width: 150px;
+  height: auto;
+  margin-right: 20px;
 }
 
 .remove-skill-button {
-  background-color: #dc3545; /* Muda a cor do botão de remover */
-  color: #fff; /* Muda a cor do texto do botão de remover */
+  background-color: #dc3545;
+  color: #fff;
 }
 
 button.remove-skill-button {
-  margin-left: 100vh; /* Move o botão para a direita da tela */
+  margin-left: 100vh;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  background-color: #dc3545; /* Cor vermelha de fundo */
-  color: #fff; /* Cor branca para o texto */
+  background-color: #dc3545;
+  color: #fff;
   cursor: pointer;
 }
 
 button.remove-skill-button:hover {
-  background-color: #c82333; /* Cor vermelha escura ao passar o mouse */
+  background-color: #c82333;
 }
 
 button.remove-skill-button span {
-  margin-right: 5px; /* Espaçamento entre o ícone e o texto do botão */
+  margin-right: 5px;
 }
 
 /* "Adicionar Skill" button */
 button.add-skill-button {
-  
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -121,35 +115,74 @@ button.add-skill-button:hover {
   background-color: #0056b3;
 }
 
-
 /* Level input */
 input.level-input {
-  width: 50px; /* Define a largura do input */
-  padding: 8px; /* Adiciona espaçamento interno para melhor visualização */
-  border: 1px solid #ccc; /* Adiciona uma borda */
-  border-radius: 5px; /* Adiciona bordas arredondadas */
+  margin-left: 10px;
+  width: 50px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 /* Logout button */
 button.logout-button {
-  position: absolute;
+  position: fixed;
   top: 40px;
   right: 20px;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  background-color: #dc3545; /* Cor vermelha de fundo */
-  color: #fff; /* Cor branca para o texto */
+  background-color: #dc3545;
+  color: #fff;
   cursor: pointer;
 }
 
 button.logout-button:hover {
-  background-color: #c82333; /* Cor vermelha escura ao passar o mouse */
+  background-color: #c82333;
 }
 
 button.logout-button svg {
-  margin-right: 5px; /* Espaçamento entre o ícone e o texto do botão */
+  margin-right: 5px;
 }
 
+/* ... (other CSS styles) */
+
+/* Skill item styles */
+.skill-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.skill-image {
+  width: 150px;
+  height: auto;
+  margin-right: 20px;
+}
+
+.add-skill-button {
+  flex-direction: column; 
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.add-skill-button:hover {
+  background-color: #0056b3;
+}
+
+.skill-details {
+  text-align: center; 
+}
+
+.level-input {
+  width: 50px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
