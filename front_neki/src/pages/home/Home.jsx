@@ -7,7 +7,7 @@ import { GetAllSkills } from "../../services/GetAllSkills";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
 import { FiLogOut } from 'react-icons/fi';
-
+import { RequestAPI } from "../../services/api";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -82,29 +82,31 @@ const Home = () => {
       skillIds: [skillId],
       level: SelectedSkillLevel,
     };
-  
+
     try {
-      await fetch(
-        `http://localhost:8080/api/funcionarios/${userId}/skills/associar-skills`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(dataPost),
-        }
+      await RequestAPI.post(
+        `/funcionarios/${userId}/skills/associar-skills`,
+        dataPost
       );
+
       console.log("Skill adicionada com sucesso!");
-  
+
       fetchSkillsFuncionario();
-  
+
+      setSkillsFuncionario((prevSkills) => [
+        ...prevSkills,
+        { id: skillId, level: SelectedSkillLevel },
+      ]);
+
+      fetchSkillsFuncionario();
+
       setSkillsFuncionario((prevSkills) => [...prevSkills, { id: skillId, level: SelectedSkillLevel }]);
       setAllSkills((prevSkills) => prevSkills.filter((skill) => skill.id !== skillId));
     } catch (error) {
       console.error("Erro ao adicionar a skill:", error);
     }
   };
-  
+
 
   const removeSkillFromFuncionario = async (skillId) => {
     const dataDelete = {
@@ -112,16 +114,11 @@ const Home = () => {
     };
 
     try {
-      await fetch(
-        `http://localhost:8080/api/funcionarios/${userId}/skills/excluir`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(dataDelete),
-        }
+      await RequestAPI.delete(
+        `/funcionarios/${userId}/skills/excluir`,
+        { data: dataDelete }
       );
+
       console.log("Skill removida com sucesso!");
 
       fetchAllSkills();
@@ -141,9 +138,9 @@ const Home = () => {
   return (
     <div>
       <h1>Home</h1>
-      <button className="logout-button" onClick={handleLogout}>    
-          <FiLogOut />
-           Logout      
+      <button className="logout-button" onClick={handleLogout}>
+        <FiLogOut />
+        Logout
       </button>
       <input
         value={funcionarioDados?.name}
@@ -151,45 +148,45 @@ const Home = () => {
         name="name"
         className="textboxLeftVC"
       />
- <h2>Habilidades:</h2>
-{skillsFuncionario.map((skill) => (
-  <div key={skill.id} className="skill-item">
-    <img
-      src={skill.urlImagem}
-      alt={skill.name}
-      className="skill-image"
-    />
-    <div className="skill-details">
-      <p>Name: {skill.name}</p>
-      <p>Level: {skill.level}</p>
-      <p>Description: {skill.description}</p>
-    </div>
-    <button
-      className="remove-skill-button"
-      onClick={() => removeSkillFromFuncionario(skill.id)}
-    >
-      <span role="img" aria-label="Remove Skill">
-        🗑️
-      </span>
-      Remove
-    </button>
-  </div>
-))}
+      <h2>Habilidades:</h2>
+      {skillsFuncionario.map((skill) => (
+        <div key={skill.id} className="skill-item">
+          <img
+            src={skill.urlImagem}
+            alt={skill.name}
+            className="skill-image"
+          />
+          <div className="skill-details">
+            <p>Name: {skill.name}</p>
+            <p>Level: {skill.level}</p>
+            <p>Description: {skill.description}</p>
+          </div>
+          <button
+            className="remove-skill-button"
+            onClick={() => removeSkillFromFuncionario(skill.id)}
+          >
+            <span role="img" aria-label="Remove Skill">
+              🗑️
+            </span>
+            Remove
+          </button>
+        </div>
+      ))}
 
       <div>
-      <h2>Habilidades Que Não Possui:</h2>
+        <h2>Habilidades Que Não Possui:</h2>
         {getSkillsNotInFuncionario().map((skill) => (
           <div key={skill.id} className="skill-item">
-          <img
+            <img
               src={skill.urlImagem}
               alt={skill.name}
               // style={{ width: "25%", height: "auto" }}
               className="skill-image"
             />
             <div className="skill-details">
-            <p>Name: {skill.name}</p>
-            <p>Level: {skill.level}</p>
-            <p>Description: {skill.description}</p>
+              <p>Name: {skill.name}</p>
+              <p>Level: {skill.level}</p>
+              <p>Description: {skill.description}</p>
             </div>
 
             <input
