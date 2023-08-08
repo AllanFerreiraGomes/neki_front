@@ -1,4 +1,6 @@
 import { RequestAPI } from './api';
+import { useContext } from 'react';
+import { IdFuncionarioContext } from '../context/IdFuncionarioContext';
 
 export const loginRequest = async (login, password) => {
   try {
@@ -7,11 +9,12 @@ export const loginRequest = async (login, password) => {
         "login": login,
         "password": password
       }
-    const response = await RequestAPI.post('/funcionarios/validar-senha',dataLogin ); // Chame a função que faz a requisição da API corretamente
-
+      console.log("1")
+    const response = await RequestAPI.post('/auth/signin',dataLogin ); // Chame a função que faz a requisição da API corretamente
+    console.log("2")
     if (response.status === 200) {
       const data = response.data;
-      return data; // Retorne o objeto FuncionarioModel se as credenciais estiverem corretas
+      return data; // Retorne o objeto user se as credenciais estiverem corretas
     } else if (response.status === 304) {
       return false; // Retorna false se as credenciais estiverem erradas
     } else {

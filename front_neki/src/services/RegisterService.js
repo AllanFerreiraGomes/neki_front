@@ -7,15 +7,17 @@ const registerUser = async (name, login, password) => {
       name: name,
       login: login,
       password: password,
+      role: ["ROLE_ADM"]
     };
 
-    const response = await RequestAPI.post('/funcionarios', userData);
+    const response = await RequestAPI.post('/auth/signup', userData);
 
-    if (response.status === 200) {
-      const data = response.data;
-      return data;
-    } else if (response.status === 304) {
-      return null; // Retorna nulo caso o status seja 304 (HttpStatus.NOT_MODIFIED)
+     const responseData = response.data;
+
+    if (responseData.message === "Usuário registrado com sucesso!") {
+      return responseData.message;
+    } else if (responseData.message === "Erro: Username já utilizado!") {
+      return responseData.message;
     } else {
       throw new Error('Erro ao fazer a solicitação de cadastro Linha 20 registerUser');
     }

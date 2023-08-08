@@ -9,9 +9,10 @@ import { useNavigate  } from "react-router-dom";
 import Home from '../home/Home';
 import { IdFuncionarioContext } from '../../context/IdFuncionarioContext';
 
-const Login = () => {
+const Login = () => 
+{
   const navigate = useNavigate();
-  const {  userId,setUserId } = useContext(IdFuncionarioContext);
+  const {  userId,setUserId , setAuthToken ,getAccessToken} = useContext(IdFuncionarioContext);
 
 
   const [loginData, setLoginData] = useState({
@@ -64,6 +65,9 @@ const Login = () => {
           console.log('Login bem-sucedido!');
           console.log("!!!!!!! id " ,response.id )
           setUserId(response.id);
+          console.log("Comecar a setar o tokem ")
+          setAuthToken(response.accessToken);
+          console.log("accessToken" ,getAccessToken)
           navigate('/Home');
           console.log("userId DEPOIS DO CONTEXT" , userId)
         } else {
