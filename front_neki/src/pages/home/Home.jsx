@@ -8,6 +8,8 @@ import "./Home.css";
 import { useNavigate } from "react-router-dom";
 import { FiLogOut } from 'react-icons/fi';
 import { RequestAPI } from "../../services/api";
+import { AccessTokenContext } from '../../context/AccessTokenContext'
+import axios from "axios";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -20,22 +22,27 @@ const Home = () => {
   const [funcionarioDados, setFuncionarioDados] = useState(null);
   const { userId } = useContext(IdFuncionarioContext);
   const [SelectedSkillLevel, setSelectedSkillLevel] = useState();
+  const { accessToken ,setAccessToken} = useContext(AccessTokenContext);
 
+
+  let tokem = accessToken;
+console.log("tokem" ,tokem)
 
   const fetchAllSkills = async () => {
     try {
       console.log("fetchAllSkills !!!!!!!")
-      const allSkillsData = await GetAllSkills();
+      const allSkillsData = await GetAllSkills(tokem);
       setAllSkills(allSkillsData);
     } catch (error) {
       console.error("Error fetching all skills:", error);
     }
   };
 
+
   const fetchSkillsFuncionario = async () => {
     try {
       console.log("Entrei  fetchSkillsFuncionario()")
-      const dataSkillsFuncionario = await getSkillsFuncionario(userId);
+      const dataSkillsFuncionario = await getSkillsFuncionario(userId,tokem);
       setSkillsFuncionario(dataSkillsFuncionario);
     } catch (error) {
       console.log("Error fetching skills for Funcionário", error);
@@ -44,12 +51,15 @@ const Home = () => {
 
   const fetchUserData = async () => {
     try {
-      const data = await getUserData(userId);
+      console.log("bearerToken", tokem )
+      const data = await getUserData(userId, tokem);
       setFuncionarioDados(data);
     } catch (error) {
       console.error("Error fetching Funcionário data:", error);
     }
   };
+
+ 
 
   useEffect(() => {
     fetchSkillsFuncionario();
@@ -84,11 +94,16 @@ const Home = () => {
     };
 
     try {
-      await RequestAPI.post(
-        `/funcionarios/${userId}/skills/associar-skills`,
-        dataPost
+      await axios.post(
+        `http://localhost:8080/api/funcionarios/${userId}/skills/associar-skills`,
+        dataPost,
+      {
+        headers: {
+          Authorization: `Bearer ${tokem}`,
+        },
+    
+      }
       );
-
       console.log("Skill adicionada com sucesso!");
 
       fetchSkillsFuncionario();
@@ -108,27 +123,33 @@ const Home = () => {
   };
 
 
-  const removeSkillFromFuncionario = async (skillId) => {
-    const dataDelete = {
-      skillId: skillId,
-    };
-
-    try {
-      await RequestAPI.delete(
-        `/funcionarios/${userId}/skills/excluir`,
-        { data: dataDelete }
-      );
-
-      console.log("Skill removida com sucesso!");
-
-      fetchAllSkills();
-      setSkillsFuncionario((prevSkills) =>
-        prevSkills.filter((skill) => skill.id !== skillId)
-      );
-    } catch (error) {
-      console.error("Erro ao remover a skill:", error);
-    }
+  
+const removeSkillFromFuncionario = async (skillId) => {
+  const dataDelete = {
+    skillId: skillId,
   };
+
+  try {
+    await axios.delete(
+      `http://localhost:8080/api/funcionarios/${userId}/skills/excluir`,
+      {
+        data: dataDelete,
+        headers: {
+          Authorization: `Bearer ${tokem}`,
+        },
+      }
+    );
+
+    console.log("Skill removida com sucesso!");
+
+    fetchAllSkills();
+    setSkillsFuncionario((prevSkills) =>
+      prevSkills.filter((skill) => skill.id !== skillId)
+    );
+  } catch (error) {
+    console.error("Erro ao remover a skill:", error);
+  }
+};
 
   const handleLogout = () => {
     navigate('/login');

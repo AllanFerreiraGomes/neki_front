@@ -1,12 +1,21 @@
-import { RequestAPI } from './api'
+import axios from "axios";
 
-export const GetAllSkills = async () => {
+export const GetAllSkills = async (tokem) => {
+    
     try {
-        const response = await RequestAPI.get(`/skill`);
-        console.log(response)
+        console.log("ENTREI NO TRY")
+        
+        const response = await axios.get(`http://localhost:8080/api/skill`, {
+        headers: {
+                Authorization: `Bearer ${tokem}`
+            }
+        });
+        console.log("SAI DA AWAIT")
+
+        console.log(response);
         return response.data;
     } catch (e) {
-        console.log(e.response)
-        return e.response
+        console.log(e.response);
+        return e.response;
     }
-}
+};

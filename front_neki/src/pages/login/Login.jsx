@@ -8,11 +8,13 @@ import Cadastro from "../cadastro/Cadastro";
 import { useNavigate  } from "react-router-dom";
 import Home from '../home/Home';
 import { IdFuncionarioContext } from '../../context/IdFuncionarioContext';
+import { AccessTokenContext } from '../../context/AccessTokenContext'
 
 const Login = () => 
 {
   const navigate = useNavigate();
-  const {  userId,setUserId , setAuthToken ,getAccessToken} = useContext(IdFuncionarioContext);
+  const {  userId,setUserId } = useContext(IdFuncionarioContext);
+  const { accessToken ,setAccessToken} = useContext(AccessTokenContext);
 
 
   const [loginData, setLoginData] = useState({
@@ -62,14 +64,10 @@ const Login = () =>
         const response = await loginRequest(loginData.username, loginData.password);
   
         if (response) {
-          console.log('Login bem-sucedido!');
-          console.log("!!!!!!! id " ,response.id )
           setUserId(response.id);
-          console.log("Comecar a setar o tokem ")
-          setAuthToken(response.accessToken);
-          console.log("accessToken" ,getAccessToken)
+          setAccessToken(response.accessToken);
+          console.log("accessToken" ,accessToken)
           navigate('/Home');
-          console.log("userId DEPOIS DO CONTEXT" , userId)
         } else {
           console.log('Erro ao fazer a solicitação de login:', response.status);
         }

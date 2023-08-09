@@ -1,10 +1,16 @@
 import axios from "axios";
-import { RequestAPI } from "./api";
 
-export const getUserData = async (userId) => {
+export const getUserData = async (userId, tokem) => {
   try {
-    const response = await RequestAPI.get(`/funcionarios/${userId}`);
-    
+    console.log("Este e o bearerToken", tokem);
+console.log("entrei %55555555")
+    const response = await axios.get(`http://localhost:8080/api/auth/get/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${tokem}`
+      }
+    });
+    console.log("sai %55555555")
+
     if (response.status === 200) {
       return response.data;
     } else {
