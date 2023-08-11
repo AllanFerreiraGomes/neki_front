@@ -65,7 +65,7 @@ const Login = () =>
   
         if (response) {
           setUserId(response.id);
-          setAccessToken(response.accessToken);
+          setAccessToken(response.token);
           console.log("accessToken" ,accessToken)
           navigate('/Home');
         } else {

@@ -65,17 +65,18 @@ button.add-skill-button:hover {
   justify-content: center;
 }
 
-/* Skill item styles */
 .skill-item {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+  width: 200px;
 }
 
 .skill-image {
-  width: 150px;
+  width: 15vw;
   height: auto;
   margin-right: 20px;
+  margin-top: 15px
 }
 
 .remove-skill-button {
@@ -83,14 +84,15 @@ button.add-skill-button:hover {
   color: #fff;
 }
 
-button.remove-skill-button {
-  margin-left: 100vh;
-  padding: 10px 20px;
+.removeSkill {
   border: none;
   border-radius: 5px;
   background-color: #dc3545;
   color: #fff;
   cursor: pointer;
+  /* margin-left: 1vw; */
+  align-self:center ;
+  text-align: center;
 }
 
 button.remove-skill-button:hover {
@@ -100,6 +102,7 @@ button.remove-skill-button:hover {
 button.remove-skill-button span {
   margin-right: 5px;
 }
+
 
 /* "Adicionar Skill" button */
 button.add-skill-button {
@@ -157,9 +160,9 @@ button.logout-button svg {
 }
 
 .skill-image {
-  width: 150px;
-  height: auto;
-  margin-right: 20px;
+  width: 100%;
+  height: 25vh;
+  margin-right: 200px;
 }
 
 .add-skill-button {
@@ -185,4 +188,71 @@ button.logout-button svg {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 5px;
+}
+.cardHabilidades {
+  display: flex;
+  flex-direction: column;
+  background-color: #696767;
+  margin: 5px;
+  flex-wrap: wrap;
+  width: 25%;
+  height: 50vh;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+.containerCard{
+  display: flex;
+  flex-direction: row;
+   align-items: center;
+  justify-content: center;
+
+}
+.infoBox{
+  align-items: center;
+ justify-content: center;
+}
+.containerButtonRemover{
+  text-align: center;
+}
+
+.skillHabilidadesNaoPossui {
+  width: 10vw;
+  height: 10vw;
+}
+
+.skills-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.ContainerNaoPossui {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  margin-left: 70px;
+}
+
+.skill-detacils {
+  margin-left: 10px;
+}
+
+.level-input {
+  margin-left: 10px;
+  width: 50px;
+}
+
+.add-skill-button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-skill-button:hover {
+  background-color: #0056b3;
 }
